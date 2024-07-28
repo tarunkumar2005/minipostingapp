@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .profile-bg {
+      background-image: url('https://i.pinimg.com/736x/0f/ab/18/0fab18ae9da5052df8350ac13048c3f6.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+  <!-- Profile Header -->
+  <div class="profile-bg h-80 relative">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="absolute bottom-0 left-0 p-4 flex items-center space-x-4">
+      <img src='/images/uploads/<%= user.profilePic %>' alt="Profile Picture"
+        class="w-24 h-24 rounded-full border-4 border-white">
+      <div class="text-white">
+        <h1 class="text-3xl font-bold">
+          <%= user.name %>
+        </h1>
+        <p class="text-xl">@<%= user.username %>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Content -->
+  <div class="container mx-auto mt-8 p-4">
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Name -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-700 mb-2">Full Name</h2>
+          <p class="text-gray-600">
+            <%= user.name %>
+          </p>
+        </div>
+        <!-- Username -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-700 mb-2">Username</h2>
+          <p class="text-gray-600">@<%= user.username %>
+          </p>
+        </div>
+        <!-- Age -->
+        <div>
+          <h2 class="text-xl font-bold text-gray-700 mb-2">Age</h2>
+          <p class="text-gray-600">
+            <%= user.age %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mt-8">
+      <h2 class="text-2xl font-bold text-gray-700 mb-4">Posts</h2>
+      <div class="space-y-4">
+        <!-- Post Item -->
+        <% user.posts.forEach(post => { %>
+          <div class="border rounded-lg p-4">
+            <div class="flex justify-between items-center mb-2">
+              <div class="text-lg font-bold text-gray-700">@<%= user.username %>
+              </div>
+              <div class="space-x-2">
+                <a href="/like/<%= post._id %>" class="px-2 py-1 text-sm bg-blue-500 text-white rounded">
+                  <%= post.likes.indexOf(user._id) === -1 ? 'Like' : 'Unlike' %>
+                </a>
+                <span class="px-2 py-1 text-sm bg-blue-500 text-white rounded">
+                  <%= post.likes.length %>
+                </span>
+                <a href="/edit/<%= post._id %>" class="px-2 py-1 text-sm bg-yellow-500 text-white rounded">Edit</a>
+                <a href="/delete/<%= post._id %>" class="px-2 py-1 text-sm bg-red-500 text-white rounded">Delete</a>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              <%= post.content %>
+            </p>
+          </div>
+        <% }) %>
+        <!-- Add more post items as needed -->
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
